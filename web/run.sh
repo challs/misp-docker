@@ -125,6 +125,9 @@ GPGEOF
 		sudo -u www-data gpg --homedir /var/www/MISP/.gnupg --export --armor $MISP_ADMIN_EMAIL > /var/www/MISP/app/webroot/gpg.asc
         fi
 
+        # Enable linotp plugin if configured
+        /enable_linotp.py
+
         # Display tips
         cat <<__WELCOME__
 Congratulations!

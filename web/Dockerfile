@@ -14,6 +14,9 @@ MAINTAINER Xavier Mertens <xavier@rootshell.be>
 
 ENV LANG en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
+ENV MISP_LINOTP_AUTH=0 \
+    MISP_LINOTP_REALM= \
+    LINOTP_BASEURL=
 
 # Update packages and install additional components
 RUN apt-get update \
@@ -183,8 +186,8 @@ RUN cd /etc/supervisor/conf.d \
 RUN sed -i -E 's/^(\s*)system\(\);/\1unix-stream("\/dev\/log");/' /etc/syslog-ng/syslog-ng.conf
 
 # Add run script
-ADD run.sh /run.sh
-RUN chmod 0755 /run.sh
+ADD run.sh enable_linotp.py /
+RUN chmod 0755 /run.sh /enable_linotp.py
 
 # Trigger to perform first boot operations
 RUN touch /.firstboot.tmp
