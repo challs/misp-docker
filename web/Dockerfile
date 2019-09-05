@@ -59,9 +59,13 @@ RUN chown www-data:www-data /var/www
 USER www-data
 
 # Download the main repository
-RUN cd /var/www && git clone https://github.com/MISP/MISP.git
+# RUN cd /var/www && git clone https://github.com/MISP/MISP.git
+
+RUN cd /var/www \
+	&& git clone --branch linotp https://github.com/challs/MISP.git
+
 RUN cd /var/www/MISP \
-    && git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`) \
+    # && git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`) \
 	&& git config core.filemode false \
     && git submodule update --init --recursive \
 	# Make git ignore filesystem permission differences for submodules \
