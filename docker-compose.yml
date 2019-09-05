@@ -23,6 +23,9 @@ services:
       - MISP_BASEURL=${MISP_BASEURL}
       - POSTFIX_RELAY_HOST=${POSTFIX_RELAY_HOST}
       - TIMEZONE=${TIMEZONE}
+      - MISP_LINOTP_AUTH=${MISP_LINOTP_AUTH}
+      - MISP_LINOTP_REALM=${MISP_LINOTP_REALM}
+      - LINOTP_BASEURL=${LINOTP_BASEURL}
 
   db:
     container_name: misp_db
