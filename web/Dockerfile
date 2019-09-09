@@ -39,6 +39,7 @@ RUN apt-get install -y \
         # MISP build requirements \
         libpoppler-dev libpoppler-cpp-dev \
         # PHP \
+        php-curl \
         php-dev php-gd php-mbstring php-redis php-json \
         php-pear pkg-config libbson-1.0 libmongoc-1.0-0 php-xml \
         php7.3-opcache \
