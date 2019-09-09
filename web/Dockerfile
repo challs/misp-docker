@@ -48,6 +48,7 @@ RUN apt-get install -y \
         php-pear pkg-config libbson-1.0 libmongoc-1.0-0 php-xml php-dev php-gd \
         # install MySQL PDO extension \
         php-mysql \
+        php-curl \
     && apt-get clean \
     # Fix php.ini with recommended settings \
     && sed -i \
