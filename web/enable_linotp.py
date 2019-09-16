@@ -79,7 +79,7 @@ def update_config(filename):
 def main():
     if os.getenv("MISP_LINOTP_AUTH") != '1':
         print("LinOTP plugin is not enabled (set MISP_LINOTP_AUTH=1 to enable)")
-        sys.exit(1)
+        sys.exit(0)
 
     configfile = 'config.php'
 
