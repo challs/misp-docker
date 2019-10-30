@@ -9,7 +9,7 @@
 # 
 
 # We are based on Ubuntu:latest
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 MAINTAINER Xavier Mertens <xavier@rootshell.be>
 
 ENV LANG en_US.UTF-8
@@ -41,9 +41,9 @@ RUN apt-get install -y \
         # Misc tools \
         cron logrotate supervisor syslog-ng-core \
         # MISP build requirements \
-        libpoppler58 libpoppler-dev libpoppler-cpp-dev \
+        libpoppler-dev libpoppler-cpp-dev \
         # PHP 7.2 \
-        libapache2-mod-php php7.2 php7.2-cli php-crypt-gpg \
+        libapache2-mod-php php7.2 php7.2-cli \
         php7.2-dev php7.2-json php7.2-mysql php7.2-opcache php7.2-readline php7.2-redis php7.2-xml \
         php-pear pkg-config libbson-1.0 libmongoc-1.0-0 php-xml php-dev php-gd \
         # install MySQL PDO extension \
