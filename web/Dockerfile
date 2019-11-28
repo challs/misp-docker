@@ -28,8 +28,9 @@ RUN apt-get install -y \
         # Core components \
         postfix curl gcc git gnupg-agent make python openssl redis-server sudo vim zip software-properties-common \
         # Apache \
-        apache2 apache2-doc apache2-utils \
+        apache2 \
         libapache2-mod-php \
+        # apache2-doc apache2-utils \
         # Python \
         python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev python-setuptools libfuzzy-dev \
         python3 python3-pip libjpeg-dev python-lxml python3-lxml \
