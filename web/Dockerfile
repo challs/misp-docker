@@ -9,7 +9,7 @@
 # 
 
 # We are based on Ubuntu:latest
-FROM ubuntu:xenial
+FROM debian:buster-slim
 MAINTAINER Xavier Mertens <xavier@rootshell.be>
 
 ENV LANG en_US.UTF-8
