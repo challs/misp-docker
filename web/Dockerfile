@@ -20,12 +20,6 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends locales software-properties-common \
     && locale-gen en_US.UTF-8
 
-RUN add-apt-repository -y ppa:ondrej/php \
-    && apt-get update \
-    && apt-get dist-upgrade -y \
-    && apt-get autoremove -y \
-    && apt-get clean
-
 # Preconfigure setting for packages
 RUN echo "postfix postfix/main_mailer_type string Local only" | debconf-set-selections
 RUN echo "postfix postfix/mailname string localhost.localdomain" | debconf-set-selections
@@ -35,6 +29,7 @@ RUN apt-get install -y \
         postfix mysql-client curl gcc git gnupg-agent make python openssl redis-server sudo vim zip software-properties-common \
         # Apache \
         apache2 apache2-doc apache2-utils \
+        libapache2-mod-php \
         # Python \
         python-dev python-pip libxml2-dev libxslt1-dev zlib1g-dev python-setuptools libfuzzy-dev \
         python3 python3-pip libjpeg-dev python-lxml python3-lxml \
@@ -42,20 +37,20 @@ RUN apt-get install -y \
         cron logrotate supervisor syslog-ng-core \
         # MISP build requirements \
         libpoppler58 libpoppler-dev libpoppler-cpp-dev \
-        # PHP 7.2 \
-        libapache2-mod-php php7.2 php7.2-cli php-crypt-gpg \
-        php7.2-dev php7.2-json php7.2-mysql php7.2-opcache php7.2-readline php7.2-redis php7.2-xml \
-        php-pear pkg-config libbson-1.0 libmongoc-1.0-0 php-xml php-dev php-gd \
-        # install MySQL PDO extension \
+        # PHP \
+        php-dev php-gd php-mbstring \
+        php-pear pkg-config libbson-1.0 libmongoc-1.0-0 php-xml \
+        # MariaDB / MySQL database access \
         php-mysql \
-    && apt-get clean \
-    # Fix php.ini with recommended settings \
-    && sed -i \
+    && apt-get clean
+
+    # Fix php.ini with recommended settings
+RUN sed -i \
         -e "s/max_execution_time = 30/max_execution_time = 300/" \
         -e "s/memory_limit = 128M/memory_limit = 2048M/" \
         -e "s/upload_max_filesize = 2M/upload_max_filesize = 50M/" \
         -e "s/post_max_size = 8M/post_max_size = 50M/" \
-        /etc/php/7.2/apache2/php.ini
+        /etc/php/7.3/apache2/php.ini
 
 # update setuptools because otherwise you'' get python errors
 RUN pip install --upgrade setuptools
