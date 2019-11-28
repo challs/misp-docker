@@ -26,7 +26,7 @@ RUN echo "postfix postfix/mailname string localhost.localdomain" | debconf-set-s
 
 RUN apt-get install -y \
         # Core components \
-        postfix mysql-client curl gcc git gnupg-agent make python openssl redis-server sudo vim zip software-properties-common \
+        postfix curl gcc git gnupg-agent make python openssl redis-server sudo vim zip software-properties-common \
         # Apache \
         apache2 apache2-doc apache2-utils \
         libapache2-mod-php \
@@ -42,6 +42,7 @@ RUN apt-get install -y \
         php-pear pkg-config libbson-1.0 libmongoc-1.0-0 php-xml \
         # MariaDB / MySQL database access \
         php-mysql \
+        mariadb-client \
     && apt-get clean
 
     # Fix php.ini with recommended settings
