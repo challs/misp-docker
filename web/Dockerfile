@@ -36,7 +36,7 @@ RUN apt-get install -y \
         # Misc tools \
         cron logrotate supervisor syslog-ng-core \
         # MISP build requirements \
-        libpoppler58 libpoppler-dev libpoppler-cpp-dev \
+        libpoppler-dev libpoppler-cpp-dev \
         # PHP \
         php-dev php-gd php-mbstring \
         php-pear pkg-config libbson-1.0 libmongoc-1.0-0 php-xml \
