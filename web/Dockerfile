@@ -54,9 +54,6 @@ RUN sed -i \
         -e "s/post_max_size = 8M/post_max_size = 50M/" \
         /etc/php/7.3/apache2/php.ini
 
-# update setuptools because otherwise you'' get python errors
-RUN pip install --upgrade setuptools
-
 RUN chown www-data:www-data /var/www
 USER www-data
 
@@ -144,23 +141,10 @@ RUN cd /var/www/MISP/app/files \
 # Install MISP Modules
 WORKDIR /opt
 # PIP3 fix
-RUN pip install --upgrade pip
 # END FIX
 RUN git clone https://github.com/MISP/misp-modules.git
 WORKDIR /opt/misp-modules
 RUN pip3 install --upgrade pip
-RUN sed -i \
-        -e 's/aiohttp.*/aiohttp/g' \
-        -e 's/functools.*//g' \
-        -e 's/async-timeout.*/async-timeout/g' \
-        -e 's/url-normalize.*/url-normalize/g' \
-        -e 's/^\(yarl\)\=.*/\1/g' \
-        -e 's/^\(sigmatools\)\=.*/\1/' \
-        # apiosintDS requires Python > 3.5.2 which is not available on Xenial \
-        -e 's/apiosintDS=.*//g' \
-        REQUIREMENTS
-RUN pip3 install --upgrade --ignore-installed urllib3
-RUN pip3 install --upgrade --ignore-installed requests 
 RUN pip3 install -I -r REQUIREMENTS
 RUN pip3 install -I .
 RUN echo "sudo -u www-data misp-modules -s -l 127.0.0.1 &" >>/etc/rc.local
