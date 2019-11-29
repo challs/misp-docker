@@ -6,7 +6,7 @@
 # 2016/03/03 - First release
 # 2017/06/02 - Updated
 # 2018/04/04 - Added objects templates
-# 
+#
 
 # We are based on Ubuntu:latest
 FROM debian:buster-slim
