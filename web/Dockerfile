@@ -73,9 +73,18 @@ RUN cd /var/www/MISP/app/files/scripts \
 
 USER root
 RUN cd /var/www/MISP/app/files/scripts/python-cybox \
-	&& python setup.py install \
+	&& pip3 install -I . \
     && cd /var/www/MISP/app/files/scripts/python-stix \
-	&& python setup.py install
+	&& pip3 install -I . \
+    && cd /var/www/MISP/PyMISP \
+    && pip3 install -I .[fileobjects,neo,openioc,virustotal] \
+    && cd /opt \
+    && git clone https://github.com/MISP/misp-modules.git \
+    && cd /opt/misp-modules \
+    # && pip3 install --upgrade pip \
+    && pip3 install -I -r REQUIREMENTS \
+    && pip3 install -I . \
+    && echo "sudo -u www-data misp-modules -s -l 127.0.0.1 &" >>/etc/rc.local
 
 USER www-data
 WORKDIR /var/www/MISP
@@ -139,16 +148,6 @@ RUN cd /var/www/MISP/app/files \
     && rm -rf taxonomies && git clone https://github.com/MISP/misp-taxonomies.git ./taxonomies \
     && chown -R www-data:www-data misp-objects misp-galaxy warninglists taxonomies
 
-# Install MISP Modules
-WORKDIR /opt
-# PIP3 fix
-# END FIX
-RUN git clone https://github.com/MISP/misp-modules.git
-WORKDIR /opt/misp-modules
-RUN pip3 install --upgrade pip
-RUN pip3 install -I -r REQUIREMENTS
-RUN pip3 install -I .
-RUN echo "sudo -u www-data misp-modules -s -l 127.0.0.1 &" >>/etc/rc.local
 
 # Supervisord Setup
 RUN cd /etc/supervisor/conf.d \
