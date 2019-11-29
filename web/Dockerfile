@@ -65,9 +65,7 @@ RUN cd /var/www/MISP \
 	&& git config core.filemode false \
     && git submodule update --init --recursive \
 	# Make git ignore filesystem permission differences for submodules \
-	&& git submodule foreach --recursive git config core.filemode false \
-    && git submodule init \
-    && git submodule update
+	&& git submodule foreach --recursive git config core.filemode false
 
 RUN cd /var/www/MISP/app/files/scripts \
 	&& git clone -b v2.1.0.12 https://github.com/CybOXProject/python-cybox.git \
