@@ -128,13 +128,25 @@ GPGEOF
         # Enable linotp plugin if configured
         /enable_linotp.py
 
+        # Set GPG path in database
+        /var/www/MISP/app/Console/cake Admin setSetting "GnuPG.homedir" "/var/www/MISP/.gnupg"
+
+        # Create admin user in database
+        /var/www/MISP/app/Console/cake UserInit
+
+        # Set admin user email address
+        updatecmd="UPDATE users SET email='$MISP_ADMIN_EMAIL' WHERE id=1"
+        mysql -u $MYSQL_USER --password="$MYSQL_PASSWORD" $MYSQL_DATABASE -h $MYSQL_HOST -P 3306 -e "$UPDATECMD"
+
+        # Set admin user password
+        /var/www/MISP/app/Console/cake Password "$MISP_ADMIN_EMAIL" "$MISP_ADMIN_PASSPHRASE"
+
         # Display tips
         cat <<__WELCOME__
 Congratulations!
 Your MISP docker has been successfully booted for the first time.
 Don't forget:
 - Reconfigure postfix to match your environment
-- Change the MISP admin email address to $MISP_ADMIN_EMAIL
 
 __WELCOME__
         rm -f /.firstboot.tmp
