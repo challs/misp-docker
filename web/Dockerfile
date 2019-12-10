@@ -66,7 +66,7 @@ USER www-data
 # RUN cd /var/www && git clone https://github.com/MISP/MISP.git
 
 RUN cd /var/www \
-	&& git clone --branch linotp https://github.com/challs/MISP.git
+	&& git clone --branch linotp-on-2.4.118 https://github.com/challs/MISP.git
 
 RUN cd /var/www/MISP \
     # && git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`) \
