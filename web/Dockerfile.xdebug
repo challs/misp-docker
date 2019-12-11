@@ -1,0 +1,30 @@
+
+#
+# Dockerfile to build a MISP (https://github.com/MISP/MISP) container
+# with xdebug enabled
+#
+FROM misp:latest
+
+# The xdebug extension will connect here
+ARG XDEBUG_REMOTE_HOST=10.76.107.44
+ARG XDEBUG_REMOTE_PORT=9000
+
+# Should xdebug try to connect on every request? (on)
+# if set to off, xdebug will only connect if the
+# browser sends appropriate headers in the request
+ARG XDEBUG_AUTOSTART=off
+
+# Update packages and install additional components
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends php-xdebug
+
+# Xdebug setup
+RUN cd /etc/php/7.3/apache2 \
+    && echo "[debug]" >> php.ini \
+    && echo "; Remote settings" >> php.ini \
+    && echo "xdebug.remote_autostart=${XDEBUG_AUTOSTART}" >> php.ini \
+    && echo "xdebug.remote_enable=on" >> php.ini \
+    && echo "xdebug.remote_mode=req" >> php.ini \
+    #&& echo "xdebug.remote_host=${XDEBUG_REMOTE_HOST}" >> php.ini \
+    && echo "xdebug.remote_connect_back=1" >> php.ini \
+    && echo "xdebug.remote_port=${XDEBUG_REMOTE_PORT}" >> php.ini
